@@ -18,4 +18,11 @@
 			</manifest>
 		</jar>
 	</target>
+	<target name="checkstyle" description="Check quality">
+		<taskdef resource="checkstyletask.properties"
+			classpath="C:\\Users\utilisateur\apache-ant\checkstyle-6.3-all.jar"/>
+		<checkstyle config="checkstyle_rules.xml">
+		    <fileset dir="src/main/java" includes="**/*.java" />
+		</checkstyle>
+	</target>
 </project>

@@ -8,8 +8,11 @@ package java;
  *
  */
 public enum ShifuEnum {
+	/** ROCK Enum value. */
 	ROCK(0, "R"),
+	/** SCISSOR Enum value.  */
 	SCISSOR(1, "S"),
+	/** PAPER Enum value.  */
 	PAPER(2, "P");
 	
 	/** Id. */
@@ -19,12 +22,12 @@ public enum ShifuEnum {
 	
 	/**
 	 * Constructor.
-	 * @param id the id.
-	 * @param name the name.
+	 * @param enumId the id.
+	 * @param enumName the name.
 	 */
-	private ShifuEnum (int id, String name) {
-		this.id = id;
-		this.name = name;
+	private ShifuEnum(int enumId, String enumName) {
+		this.id = enumId;
+		this.name = enumName;
 	}
 
 	/**

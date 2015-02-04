@@ -12,10 +12,13 @@ import java.util.Scanner;
  *
  */
 public class MainClass {
+	
+	/** Const for random. */
+	private static final int RANDOM_INT = 3;
 
 	/**
 	 * Main method.
-	 * @param args
+	 * @param args Arguments
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -27,7 +30,7 @@ public class MainClass {
 		scan.close();
 		
 		Random ran = new Random(new Date().getTime());
-		int i = ran.nextInt(3);
+		int i = ran.nextInt(RANDOM_INT);
 		
 		MainClass main = new MainClass();
 		main.checkIfWin(shif, i);
