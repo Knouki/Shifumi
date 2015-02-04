@@ -31,7 +31,7 @@ public enum ShifuEnum {
 	}
 
 	/**
-	 * Get the id.
+	 * Get the id of the enum.
 	 * @return the id.
 	 */
 	public int getId() {
@@ -39,7 +39,7 @@ public enum ShifuEnum {
 	}
 
 	/**
-	 * Get the name.
+	 * Get the name of the enum.
 	 * @return the name.
 	 */
 	public String getName() {
@@ -47,7 +47,7 @@ public enum ShifuEnum {
 	}
 	
 	/**
-	 * Get the value.
+	 * Get the value set for this enum.
 	 * @return the value.
 	 */
 	public String getValue() {
