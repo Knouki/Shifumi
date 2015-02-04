@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<project name="Shifumi" default="compile">
+	<target name="clean" description="Clean all project">
+		<delete dir="bin"/>
+		<delete dir="dist"/>
+	</target>
+	<target name="compile" description="Compile all java file or src folder">
+		<mkdir dir="bin"/>
+		<javac srcdir="src" destdir="bin"
+			excludes="com/imie/MainTest.java"/>
+	</target>
+	<target name="jar" description="Make jar file of project">
+		<mkdir dir="dist"/>
+		<jar destfile="dist/shifu.jar">
+			<fileset dir="bin" includes="**/*.class"/>
+			<manifest>
+				<attribute name="Main Class" value="com.imie.MainClass" />
+			</manifest>
+		</jar>
+	</target>
+</project>
