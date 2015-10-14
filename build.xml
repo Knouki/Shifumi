@@ -1,26 +1,42 @@
 <?xml version="1.0"?>
 <project name="Shifumi" default="compile">
+    <property name="reports.tests" location="testReports" />
+    <property name="build.dir" location="bin" />
+    <property name="build.test.dir" location="bin/tests" />
+    
 	<path id="findbugsdir">
 		<fileset dir="lib/">
 			<include name="*.jar" />
 		</fileset>
 	</path>
     
-    <target name="build" depends="clean,compile,jar">
+    <path id="junit.class.path">
+        <pathelement location="lib/junit.jar"/>
+        <pathelement location="${build.dir}"/>
+    </path>
+    
+    <target name="build" depends="clean,compile,test,jar,checkstyle,findbug">
     </target>
     
 	<target name="clean" description="Clean all project">
-		<delete dir="bin"/>
+		<delete dir="${build.dir}"/>
 		<delete dir="dist"/>
+		<delete dir="${build.test.dir}"/>
 	</target>
+    
 	<target name="compile" description="Compile all java file or src folder">
-		<mkdir dir="bin"/>
-		<javac srcdir="src/main" destdir="bin"/>
+		<mkdir dir="${build.dir}"/>
+		<mkdir dir="${build.test.dir}"/>
+		<javac srcdir="src/main" destdir="${build.dir}"/>
+		<javac srcdir="src/test" destdir="${build.test.dir}">
+             <classpath refid="junit.class.path"/>
+        </javac>
 	</target>
+    
 	<target name="jar" description="Make jar file of project">
 		<mkdir dir="dist"/>
 		<jar destfile="dist/shifu.jar">
-			<fileset dir="bin" includes="**/*.class"/>
+			<fileset dir="${build.dir}" includes="**/*.class"/>
 			<manifest>
 				<attribute name="Main Class" value="com.imie.MainClass" />
 			</manifest>
@@ -45,4 +61,24 @@
 	            
 	        </findbug>
 	</target>
+    
+    <target name="test" depends="compile">
+        <mkdir dir="${reports.tests}" />
+        <junit printsummary="yes" fork="true" haltonfailure="yes">
+            <classpath refid="junit.class.path" />
+            <classpath>
+                <pathelement location="${build.test.dir}"/>
+            </classpath>
+            <formatter type="xml" />
+            
+            <batchtest todir="${reports.tests}">
+                <fileset dir="src/test">
+                    <include name="**/*Test.java" />
+                </fileset>
+            </batchtest>
+            
+        </junit>
+    </target>
+    
+    
 </project>
