@@ -3,11 +3,17 @@
     <property name="reports.tests" location="testReports" />
     <property name="build.dir" location="bin" />
     <property name="build.test.dir" location="bin/tests" />
+    <property name="src.main" location="src/main" />
+    <property name="src.test" location="src/test" />
     
     <path id="findbugsdir">
         <fileset dir="lib/">
             <include name="*.jar" />
         </fileset>
+    </path>
+    
+    <path id="checkstyledir">
+        <pathelement location="lib/checkstyle-6.3.jar" />
     </path>
     
     <path id="junit.class.path">
@@ -29,8 +35,8 @@
     <target name="compile" description="Compile all java file or src folder">
         <mkdir dir="${build.dir}" />
         <mkdir dir="${build.test.dir}" />
-        <javac srcdir="src/main" destdir="${build.dir}" />
-        <javac srcdir="src/test" destdir="${build.test.dir}">
+        <javac srcdir="${src.main}" destdir="${build.dir}" />
+        <javac srcdir="${src.test}" destdir="${build.test.dir}">
             <classpath refid="junit.class.path" />
         </javac>
     </target>
@@ -46,17 +52,17 @@
     </target>
     
     <target name="checkstyle" description="Check quality">
-        <taskdef resource="checkstyletask.properties" classpath="C:\\Users\utilisateur\apache-ant\checkstyle-6.3-all.jar" />
+        <taskdef resource="checkstyletask.properties" classpathref="checkstyledir" />
         <checkstyle config="checkstyle_rules.xml">
-            <fileset dir="src/main/java" includes="**/*.java" />
+            <fileset dir="${src.main}" includes="**/*.java" />
         </checkstyle>
     </target>
     
     <target name="findbug" description="Find all bug">
         <taskdef name="findbug" classname="edu.umd.cs.findbugs.anttask.FindBugsTask" classpathref="findbugsdir" />
         <findbug home="lib/" output="html" outputFile="dist\findbug-report.html">
-            <sourcePath path="src/main/java" />
-            <class location="bin" />
+            <sourcePath path="${src.main}" />
+            <class location="${build.dir}" />
         </findbug>
     </target>
     
@@ -72,7 +78,7 @@
 <!--             <formatter type="xml" /> -->
             
             <batchtest todir="${reports.tests}">
-                <fileset dir="src/test">
+                <fileset dir="${src.test}">
                     <include name="**/*Test.java" />
                 </fileset>
             </batchtest>
