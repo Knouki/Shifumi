@@ -5,14 +5,17 @@
 			<include name="*.jar" />
 		</fileset>
 	</path>
+    
+    <target name="build" depends="clean,compile,jar">
+    </target>
+    
 	<target name="clean" description="Clean all project">
 		<delete dir="bin"/>
 		<delete dir="dist"/>
 	</target>
 	<target name="compile" description="Compile all java file or src folder">
 		<mkdir dir="bin"/>
-		<javac srcdir="src" destdir="bin"
-			excludes="com/imie/MainTest.java"/>
+		<javac srcdir="src/main" destdir="bin"/>
 	</target>
 	<target name="jar" description="Make jar file of project">
 		<mkdir dir="dist"/>
