@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <project name="Shifumi" default="compile">
-    <property name="reports.tests" location="testReports" />
+    <property name="reports.tests" location="build/testReports" />
     <property name="build.dir" location="bin" />
     <property name="build.test.dir" location="bin/tests" />
     <property name="src.main" location="src/main" />
@@ -16,20 +16,26 @@
         <pathelement location="lib/checkstyle-6.3.jar" />
     </path>
     
+    <path id="pmddir">
+        <pathelement location="lib/pmd-5.0.2.jar" />
+        <pathelement location="lib/jaxen-1.1.6.jar" />
+        <pathelement location="lib/asm-3.2.jar" />
+    </path>
+    
     <path id="junit.class.path">
         <pathelement location="lib/junit.jar" />
         <pathelement location="lib/org.hamcrest.core_1.3.0.jar" />
         <pathelement location="${build.dir}" />
     </path>
     
-    <target name="build" depends="clean,compile,clean,test,jar,checkstyle,findbug">
+    <target name="build" depends="clean,compile,clean,test,jar,checkstyle,findbug,pmd">
     </target>
     
     <target name="clean" description="Clean all project">
         <delete dir="${build.dir}" />
         <delete dir="dist" />
         <delete dir="${build.test.dir}" />
-        <delete dir="${reports.tests}" />
+        <delete dir="build/" />
     </target>
     
     <target name="compile" description="Compile all java file or src folder">
@@ -52,9 +58,12 @@
     </target>
     
     <target name="checkstyle" description="Check quality">
+        <mkdir dir="build/cs" />
         <taskdef resource="checkstyletask.properties" classpathref="checkstyledir" />
         <checkstyle config="checkstyle_rules.xml">
             <fileset dir="${src.main}" includes="**/*.java" />
+            <formatter type="plain"/>
+            <formatter type="xml" toFile="build/cs/checkstyle_errors.xml"/>
         </checkstyle>
     </target>
     
@@ -66,6 +75,21 @@
         </findbug>
     </target>
     
+    <fileset dir="/lib/runtime">
+        <include name="**/*.jar" />
+    </fileset>
+
+    <target name="pmd" description="Launch pmd">
+        <taskdef name="pmd" classname="net.sourceforge.pmd.ant.PMDTask" classpathref="pmddir" />
+        <pmd shortFilenames="true">
+            <ruleset>rules.xml</ruleset>
+            <formatter type="xml" toFile="build/pmd.xml" />
+            <fileset dir="${src.main}">
+                <include name="**/*.java" />
+            </fileset>
+        </pmd>
+    </target>
+    
     <target name="test" depends="compile">
         <mkdir dir="${reports.tests}" />
         <junit printsummary="yes" fork="true" haltonfailure="yes">
@@ -75,7 +99,7 @@
                 <pathelement location="${build.dir}" />
                 <pathelement location="${build.test.dir}" />
             </classpath>
-<!--             <formatter type="xml" /> -->
+            <formatter type="xml"/>
             
             <batchtest todir="${reports.tests}">
                 <fileset dir="${src.test}">
