@@ -4,81 +4,79 @@
     <property name="build.dir" location="bin" />
     <property name="build.test.dir" location="bin/tests" />
     
-	<path id="findbugsdir">
-		<fileset dir="lib/">
-			<include name="*.jar" />
-		</fileset>
-	</path>
-    
-    <path id="junit.class.path">
-        <pathelement location="lib/junit.jar"/>
-        <pathelement location="${build.dir}"/>
+    <path id="findbugsdir">
+        <fileset dir="lib/">
+            <include name="*.jar" />
+        </fileset>
     </path>
     
-    <target name="build" depends="clean,compile,test,jar,checkstyle,findbug">
+    <path id="junit.class.path">
+        <pathelement location="lib/junit.jar" />
+        <pathelement location="lib/org.hamcrest.core_1.3.0.jar" />
+        <pathelement location="${build.dir}" />
+    </path>
+    
+    <target name="build" depends="clean,compile,clean,test,jar,checkstyle,findbug">
     </target>
     
-	<target name="clean" description="Clean all project">
-		<delete dir="${build.dir}"/>
-		<delete dir="dist"/>
-		<delete dir="${build.test.dir}"/>
-	</target>
+    <target name="clean" description="Clean all project">
+        <delete dir="${build.dir}" />
+        <delete dir="dist" />
+        <delete dir="${build.test.dir}" />
+        <delete dir="${reports.tests}" />
+    </target>
     
-	<target name="compile" description="Compile all java file or src folder">
-		<mkdir dir="${build.dir}"/>
-		<mkdir dir="${build.test.dir}"/>
-		<javac srcdir="src/main" destdir="${build.dir}"/>
-		<javac srcdir="src/test" destdir="${build.test.dir}">
-             <classpath refid="junit.class.path"/>
+    <target name="compile" description="Compile all java file or src folder">
+        <mkdir dir="${build.dir}" />
+        <mkdir dir="${build.test.dir}" />
+        <javac srcdir="src/main" destdir="${build.dir}" />
+        <javac srcdir="src/test" destdir="${build.test.dir}">
+            <classpath refid="junit.class.path" />
         </javac>
-	</target>
+    </target>
     
-	<target name="jar" description="Make jar file of project">
-		<mkdir dir="dist"/>
-		<jar destfile="dist/shifu.jar">
-			<fileset dir="${build.dir}" includes="**/*.class"/>
-			<manifest>
-				<attribute name="Main Class" value="com.imie.MainClass" />
-			</manifest>
-		</jar>
-	</target>
-	<target name="checkstyle" description="Check quality">
-		<taskdef resource="checkstyletask.properties"
-			classpath="C:\\Users\utilisateur\apache-ant\checkstyle-6.3-all.jar"/>
-		<checkstyle config="checkstyle_rules.xml">
-		    <fileset dir="src/main/java" includes="**/*.java" />
-		</checkstyle>
-	</target>
-	<target name="findbug" description="Find all bug">
-	        <taskdef name="findbug"
-	        	   classname="edu.umd.cs.findbugs.anttask.FindBugsTask"
-	        	   classpathref="findbugsdir"/>
-	        <findbug home="lib/"
-	        	output="html"
-	        	outputFile="dist\findbug-report.html">
-	        	<sourcePath path="src/main/java"/>
-	        	<class location="bin"/>
-	            
-	        </findbug>
-	</target>
+    <target name="jar" description="Make jar file of project">
+        <mkdir dir="dist" />
+        <jar destfile="dist/shifu.jar">
+            <fileset dir="${build.dir}" includes="**/*.class" />
+            <manifest>
+                <attribute name="Main Class" value="src/main/java/" />
+            </manifest>
+        </jar>
+    </target>
+    
+    <target name="checkstyle" description="Check quality">
+        <taskdef resource="checkstyletask.properties" classpath="C:\\Users\utilisateur\apache-ant\checkstyle-6.3-all.jar" />
+        <checkstyle config="checkstyle_rules.xml">
+            <fileset dir="src/main/java" includes="**/*.java" />
+        </checkstyle>
+    </target>
+    
+    <target name="findbug" description="Find all bug">
+        <taskdef name="findbug" classname="edu.umd.cs.findbugs.anttask.FindBugsTask" classpathref="findbugsdir" />
+        <findbug home="lib/" output="html" outputFile="dist\findbug-report.html">
+            <sourcePath path="src/main/java" />
+            <class location="bin" />
+        </findbug>
+    </target>
     
     <target name="test" depends="compile">
         <mkdir dir="${reports.tests}" />
         <junit printsummary="yes" fork="true" haltonfailure="yes">
+            <formatter type="brief" usefile="false"/>
             <classpath refid="junit.class.path" />
             <classpath>
-                <pathelement location="${build.test.dir}"/>
+                <pathelement location="${build.dir}" />
+                <pathelement location="${build.test.dir}" />
             </classpath>
-            <formatter type="xml" />
+<!--             <formatter type="xml" /> -->
             
             <batchtest todir="${reports.tests}">
                 <fileset dir="src/test">
                     <include name="**/*Test.java" />
                 </fileset>
             </batchtest>
-            
         </junit>
     </target>
-    
     
 </project>

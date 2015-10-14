@@ -1,7 +1,7 @@
 /**
  * 
  */
-package java;
+package com.shifumi.main;
 
 import java.util.Date;
 import java.util.Random;
