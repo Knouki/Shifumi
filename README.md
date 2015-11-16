@@ -2,8 +2,6 @@
 
 A little SHIFUMI game in JAVA.
 
-Checkstyle and findbugs ok.
-
 
 # TODO
 
