@@ -1,7 +1,7 @@
 # Shifumi
 
 A little SHIFUMI game in JAVA.
-
+BLABLABLABLA
 
 # TODO
 
