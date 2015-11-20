@@ -1,7 +1,7 @@
 /**
  * 
  */
-package main;
+package com.knouki;
 
 /**
  * @author Sandra

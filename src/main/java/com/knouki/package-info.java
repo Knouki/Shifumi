@@ -4,4 +4,4 @@
 * @author Sandra
 *
 */
-package main;
+package com.knouki;

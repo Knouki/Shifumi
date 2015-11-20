@@ -1,7 +1,7 @@
 /**
  * 
  */
-package main;
+package com.knouki;
 
 import java.util.Date;
 import java.util.Random;

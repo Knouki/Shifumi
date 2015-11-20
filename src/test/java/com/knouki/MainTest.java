@@ -1,10 +1,8 @@
-package test;
+package com.knouki;
 
 import org.junit.Assert;
 import org.junit.Test;
 
-import main.MainClass;
-import main.ShifuEnum;
 
 /**
  * Main class for the test.
