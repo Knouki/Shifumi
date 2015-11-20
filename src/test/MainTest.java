@@ -1,10 +1,10 @@
-package com.shifumi.test;
+package test;
 
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.shifumi.main.MainClass;
-import com.shifumi.main.ShifuEnum;
+import main.MainClass;
+import main.ShifuEnum;
 
 /**
  * Main class for the test.
