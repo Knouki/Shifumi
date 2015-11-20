@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.shifumi.main;
+package com.knouki;
 
 /**
  * @author Sandra
