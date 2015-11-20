@@ -3,8 +3,8 @@
     <property name="reports.tests" location="build/testReports" />
     <property name="build.dir" location="bin" />
     <property name="build.test.dir" location="bin/tests" />
-    <property name="src.main" location="src/main" />
-    <property name="src.test" location="src/test" />
+    <property name="src.main" location="src/main/java" />
+    <property name="src.test" location="src/test/java" />
     
     <path id="findbugsdir">
         <fileset dir="lib/">
